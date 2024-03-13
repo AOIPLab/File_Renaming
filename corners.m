@@ -1,0 +1,1 @@
+function [a,b,c,d] = corners([1 2; 3 4])
