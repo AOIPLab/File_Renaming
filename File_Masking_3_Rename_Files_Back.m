@@ -74,22 +74,24 @@ for ii=1:n_files
         for jj=1:numel(current_path)
             fprintf('%s\n', current_path{jj})
         end
-        continue;
+        % continue;
     end
     % Convert to char array
-    current_path = current_path{1};
-    current_fname = current_fname{1};
-    
-    % Rename
-    [ok, msg] = movefile(...
-        fullfile(current_path, fnames_old{ii}), ...
-        fullfile(current_path, fnames_new{ii}));
-    if ~ok
-        warning(msg);
+    for kk=1:numel(current_path)
+        curr_path = current_path{kk};
+        curr_fname = current_fname{kk};
+        
+        % Rename
+        [ok, msg] = movefile(...
+            fullfile(curr_path, fnames_old{ii}), ...
+            fullfile(curr_path, fnames_new{ii}));
+        if ~ok
+            warning(msg);
+        end
+        
+        % Update progress
+        waitbar(ii/n_files, wb)
     end
-    
-    % Update progress
-    waitbar(ii/n_files, wb)
 end
 close(wb)
 % Summary of files, errors
